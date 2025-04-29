@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showEditForm(currentEntryId);
             }
         } else {
-            alert('비밀번호가 일치하지 않습니다.');
+            alert('${entryPassword} 비밀번호가 일치하지 않습니다.');
             console.log(entryPassword);
             confirmPasswordInput.value = '';
             confirmPasswordInput.focus();
