@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else {
             alert('비밀번호가 일치하지 않습니다.');
+            console.log(entryPassword);
             confirmPasswordInput.value = '';
             confirmPasswordInput.focus();
         }
@@ -250,6 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function getEntryPassword(entryId) {
         const entries = await getGuestbookEntries();
         const entry = entries.find(entry => entry.id === entryId);
+        //console.log(entry.password);
         return entry ? entry.password : null;
     }
     
