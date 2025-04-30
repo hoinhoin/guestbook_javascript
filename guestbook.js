@@ -224,37 +224,24 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {string} action - 'edit' 또는 'delete'
      */
     async function verifyPassword(action) {
+        const entryPassword = await getEntryPassword(currentEntryId);
         const inputPassword = confirmPasswordInput.value;
-    
-        try {
-            // 서버에 비밀번호를 전송해 확인
-            const response = await fetch(`${baseURL}${currentEntryId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ password: inputPassword })
-            });
-    
-            const result = await response.json();
-    
-            if (result.valid) {
-                closeModals();
-                if (action === 'delete') {
-                    await deleteEntry(currentEntryId, inputPassword); 
-                } else {
-                    showEditForm(currentEntryId);
-                }
+        
+        if (entryPassword === inputPassword) {
+            closeModals();
+            
+            if (action === 'delete') {
+                await deleteEntry(currentEntryId);
             } else {
-                alert('비밀번호가 일치하지 않습니다.');
-                confirmPasswordInput.value = '';
-                confirmPasswordInput.focus();
+                showEditForm(currentEntryId);
             }
-        } catch (error) {
-            console.error('비밀번호 확인 중 오류:', error);
+        } else {
+            alert('비밀번호가 일치하지 않습니다.');
+            console.log(entryPassword);
+            confirmPasswordInput.value = '';
+            confirmPasswordInput.focus();
         }
     }
-    
     
     /**
      * 특정 항목의 비밀번호를 가져오는 함수
@@ -272,8 +259,8 @@ document.addEventListener('DOMContentLoaded', function() {
      * 방명록 항목을 삭제하는 함수
      * @param {number} entryId - 방명록 항목 ID
      */
-    async function deleteEntry(entryId,password) {
-        //const password = prompt('삭제하려면 비밀번호를 입력하세요:');
+    async function deleteEntry(entryId) {
+        const password = prompt('삭제하려면 비밀번호를 입력하세요:');
         
         try {
             const response = await deleteGuestbookEntry(entryId, password);
