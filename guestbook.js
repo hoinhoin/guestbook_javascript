@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         try {
             // 서버에 비밀번호를 전송해 확인
-            const response = await fetch(`${baseURL}${currentEntryId}/verify/`, {
+            const response = await fetch(`${baseURL}${currentEntryId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
